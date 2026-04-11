@@ -199,12 +199,6 @@ It does **not** include:
 
 ## Contact
 
-For security inquiries:
-
-📧 security@cityofhats.com
-
-General inquiries:
-
 📧 admin@cityofhats.com
 
 ---
