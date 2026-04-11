@@ -9,11 +9,15 @@
 
 City of Hats is a next-generation secure communication platform designed to provide private, identity-based messaging without relying on traditional identifiers such as phone numbers or email addresses.
 
-This repository contains the **cryptographic architecture documentation and production source code** for the encryption layer used to secure messaging, voice, and data exchange within the platform.
+This repository contains the **cryptographic architecture documentation, formal protocol specification, and production source code** for the encryption layer used to secure messaging, voice, and data exchange within the platform.
+
+📄 **[Read the full Protocol Specification →](PROTOCOL.md)**
 
 ---
 
 ## Source Code
+
+The [`PROTOCOL.md`](PROTOCOL.md) document provides a complete protocol specification covering key exchange flows, Double Ratchet parameters, hybrid post-quantum integration, group sender key distribution, sealed payload format, wire formats, and all cryptographic primitives used.
 
 The `src/` directory contains the actual production cryptographic implementation:
 
@@ -164,14 +168,15 @@ City of Hats is currently:
 
 - ✅ Cryptographic source code published (this repository)
 - ✅ Architecture documentation published (this repository)
+- ✅ Formal protocol specification published ([PROTOCOL.md](PROTOCOL.md))
 - ✅ Privacy & logging transparency page published ([cityofhats.com/transparency](https://cityofhats.com/transparency))
+- ✅ MIT licensed for maximum openness
 - 🔒 Closed-source (core platform, non-crypto components)
 - 🧪 Preparing for independent security review
 
 Planned next steps:
 
 - Conduct third-party security audit
-- Publish formal protocol specification document
 - Expand open-source scope
 
 ---
@@ -180,9 +185,9 @@ Planned next steps:
 
 This repository includes:
 
-- Production cryptographic source code (`src/`)
-- Protocol design documentation
-- High-level architecture overview
+- Formal protocol specification ([`PROTOCOL.md`](PROTOCOL.md))
+- Production cryptographic source code ([`src/`](src/))
+- High-level architecture overview (this README)
 
 It does **not** include:
 
@@ -208,6 +213,12 @@ General inquiries:
 
 This document provides an overview of the cryptographic design and includes production source code.  
 Implementation details may evolve as the platform matures and undergoes formal review.
+
+---
+
+## License
+
+This repository is licensed under the [MIT License](LICENSE).
 
 ---
 
