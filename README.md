@@ -51,6 +51,22 @@ City of Hats is built around the following core principles:
 
 ---
 
+## What Makes City of Hats Different
+
+Most secure messengers still require a phone number or email to create an account. That single requirement creates a permanent link between your real identity and every conversation you have.
+
+City of Hats replaces this with **Hat IDs** — cryptographic identities that exist independently of any personal identifier. This enables:
+
+- **Anonymous yet persistent identities** — You can maintain a reputation without revealing who you are
+- **Context-specific identities** — Use a different Hat for work, personal, investigative, or temporary conversations. No correlation between them.
+- **No phone number, no email, no identity graph** — There is nothing to subpoena that links a Hat to a person
+
+In addition, City of Hats integrates **sender-enforced security controls** directly into the encryption layer. Message lifecycle policies — expiration, recall, view-once, burn-after-read — are not UI features bolted on top. They are enforced at the protocol level, inside the encrypted payload, before the server ever sees the message.
+
+This is not a Signal clone with a different logo. The identity model is fundamentally different.
+
+---
+
 ## Cryptographic Stack
 
 ### Key Exchange (1:1 Chat)
@@ -162,6 +178,46 @@ For detailed information on what the server can and cannot see, visit our [Trans
 
 ---
 
+## Metadata Considerations
+
+"We encrypt your messages" is not enough. Metadata — who talks to whom, when, how often, from where — can be as revealing as content. City of Hats is designed to minimize metadata exposure:
+
+- **No phone numbers or emails** — Hat IDs are the only identifier. There is no mapping from Hat to real-world identity on our servers.
+- **No plaintext content stored** — The server relays ciphertext. For E2E channels, we cannot decrypt it even if compelled.
+- **No persistent IP logging in the app** — IP addresses are hashed for rate limiting and discarded. We do not maintain IP-to-Hat association logs.
+- **Encrypted headers** — DH ratchet public keys and message counters are encrypted, not visible to the server in transit.
+- **Metadata padding** — Message lengths are padded to fixed buckets so ciphertext size does not reveal content length.
+
+**What we are honest about:**
+- The server does see Hat codes, pair/group IDs, timestamps, and delivery status — this is required to route messages.
+- Push notification tokens are stored to deliver notifications.
+- We are working toward reducing even these operational metadata points.
+
+Full details: [cityofhats.com/transparency](https://cityofhats.com/transparency)
+
+---
+
+## Threat Model
+
+City of Hats is designed to protect against:
+
+- **Passive network surveillance** — All traffic is E2E encrypted. An observer on the network sees only ciphertext with encrypted headers.
+- **Server compromise** — For E2E channels, the server holds no decryption keys. A complete database breach yields only opaque ciphertext, public keys, and routing metadata.
+- **Identity correlation** — No phone number or email is required. Hat IDs are not linked to real-world identity on our infrastructure.
+- **Message content analysis** — Metadata padding prevents length-based analysis. Sealed sender prevents server-side attribution tampering.
+- **Future quantum attacks** — Hybrid X25519 + ML-KEM-768 key exchange provides post-quantum resistance today.
+- **Key compromise (forward secrecy)** — Double Ratchet ensures that compromising current keys does not expose past messages. Each message uses a unique derived key that is discarded after use.
+
+**What we do not yet claim to protect against:**
+
+- **Advanced nation-state endpoint compromise** — If your device is compromised at the OS level, encryption cannot help. This is true of every messaging app.
+- **Traffic analysis at scale** — While we pad message lengths and encrypt headers, sophisticated traffic analysis (timing, frequency, volume patterns) is an open research problem that no messenger has fully solved.
+- **Formal verification** — Our protocol has not yet undergone formal mathematical verification or a completed third-party audit. This is planned.
+
+We believe stating limitations clearly is more credible than claiming invulnerability.
+
+---
+
 ## Transparency Status
 
 City of Hats is currently:
@@ -197,24 +253,21 @@ It does **not** include:
 
 ---
 
-## Contact
-
-📧 admin@cityofhats.com
-
----
-
-## Disclaimer
-
-This document provides an overview of the cryptographic design and includes production source code.  
-Implementation details may evolve as the platform matures and undergoes formal review.
-
----
-
 ## License
 
 This repository is licensed under the [MIT License](LICENSE).
 
 ---
 
-**City of Hats**  
+## Disclaimer
+
+This document provides an overview of the cryptographic design and includes production source code. Implementation details may evolve as the platform matures and undergoes formal review.
+
+---
+
+City of Hats is actively evolving toward greater transparency and external validation. We welcome review, feedback, and discussion from the security community.
+
+📧 admin@cityofhats.com
+
+**City of Hats Inc.** · Toronto, Canada  
 Private communication. In your control.
