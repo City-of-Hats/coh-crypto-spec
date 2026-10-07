@@ -97,6 +97,12 @@ Security researchers can start with the [protocol](PROTOCOL.md) and [audit quest
 
 Sponsorship supports the open-source work and planned independent review. No completed audit, booked auditor or security certification is implied by contributing. [Support the work](https://support.cityofhats.com), or contact [admin@cityofhats.com](mailto:admin@cityofhats.com) about audit proposals and sponsorship.
 
+## Supporters
+
+Public acknowledgments will appear here once contributions are confirmed and supporters approve their display details. After successful payment, we will contact supporters privately to arrange optional recognition: a display name or GitHub handle, picture or company logo, and any website link. Nothing is published until the supporter approves it. Anonymous support is welcome, and amounts stay private unless separately approved for publication.
+
+See [supporter acknowledgments](https://support.cityofhats.com/#supporters). Contact [admin@cityofhats.com](mailto:admin@cityofhats.com), [call +1 473 475 9594](tel:+14734759594), or [send an SMS](sms:+14734759594) with any questions. One-time contributors are recognized as supporters; ongoing sponsors will be identified separately.
+
 ## License
 
 The published files are licensed under the [MIT License](LICENSE). This license applies to this repository, not unpublished platform components.
