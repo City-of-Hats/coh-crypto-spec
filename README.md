@@ -97,6 +97,12 @@ Security researchers can start with the [protocol](PROTOCOL.md) and [audit quest
 
 Sponsorship supports the open-source work and planned independent review. No completed audit, booked auditor or security certification is implied by contributing. [Support the work](https://support.cityofhats.com), or contact [admin@cityofhats.com](mailto:admin@cityofhats.com) about audit proposals and sponsorship.
 
+## Company Sponsorship
+
+Companies sponsoring **US$1,000 or more** receive **12 months of City of Hats Premium membership for all their employees**, with no employee seat cap. All employee memberships share a 12-month term from the company’s agreed activation date and do not automatically renew. Contact [admin@cityofhats.com](mailto:admin@cityofhats.com), [call +1 473 475 9594](tel:+14734759594), or [send an SMS](sms:+14734759594) to arrange activation. Employee Premium membership is distinct from Business / Team administration and Enterprise deployments, which have separate terms. Public recognition remains optional.
+
+See the [company sponsorship offer](https://support.cityofhats.com/#company-sponsorship).
+
 ## Supporters
 
 Public acknowledgments will appear here once contributions are confirmed and supporters approve their display details. After successful payment, we will contact supporters privately to arrange optional recognition: a display name or GitHub handle, picture or company logo, and any website link. Nothing is published until the supporter approves it. Anonymous support is welcome, and amounts stay private unless separately approved for publication.

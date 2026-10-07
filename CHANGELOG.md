@@ -4,6 +4,8 @@ This records public repository changes. It is not a changelog for the complete d
 
 ## 2026-10-07 — Audit Preparation and Documentation Update
 
+- Added the company sponsorship benefit: US$1,000 or more includes 12 months of Premium for all employees, with no employee seat cap and activation arranged directly.
+
 - Added opt-in supporter acknowledgment guidance and a link to the support page's supporter section; no supporter identities or payment amounts published without permission.
 - Added the internal AI-assisted review progress record: 9 original findings (3 High, 4 Medium, 2 Low), with delivered remediation distinguished from outstanding work and verified closure.
 - Added dated evidence summaries for delivered High remediations while withholding technical details of unresolved findings.
