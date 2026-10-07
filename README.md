@@ -99,7 +99,14 @@ Sponsorship supports the open-source work and planned independent review. No com
 
 ## Company Sponsorship
 
-Companies sponsoring **US$1,000 or more** receive **12 months of City of Hats Premium membership for all their employees**, with no employee seat cap. All employee memberships share a 12-month term from the company’s agreed activation date and do not automatically renew. Contact [admin@cityofhats.com](mailto:admin@cityofhats.com), [call +1 473 475 9594](tel:+14734759594), or [send an SMS](sms:+14734759594) to arrange activation. Employee Premium membership is distinct from Business / Team administration and Enterprise deployments, which have separate terms. Public recognition remains optional.
+Company sponsorship includes City of Hats Premium membership for employees, with no employee seat cap:
+
+| One-time sponsorship (USD) | Employee benefit |
+| --- | --- |
+| US$1,000–2,499 | 12 months of Premium for all employees, sharing one term from the agreed company activation date. |
+| US$2,500 or more | Lifetime Premium for all current and future employees. New employees can be added without another sponsorship payment. |
+
+The lifetime benefit lasts for as long as City of Hats offers the Premium service. Contact [admin@cityofhats.com](mailto:admin@cityofhats.com), [call +1 473 475 9594](tel:+14734759594), or [send an SMS](sms:+14734759594) to arrange activation. Employee Premium membership is distinct from Business / Team administration and Enterprise deployments, which have separate terms. Public recognition remains optional. Neither tier automatically renews or charges another sponsorship payment.
 
 See the [company sponsorship offer](https://support.cityofhats.com/#company-sponsorship).
 
