@@ -112,7 +112,7 @@ See the [company sponsorship offer](https://support.cityofhats.com/#company-spon
 
 ## Supporters
 
-Public acknowledgments will appear here once contributions are confirmed and supporters approve their display details. After successful payment, we will contact supporters privately to arrange optional recognition: a display name or GitHub handle, picture or company logo, and any website link. Nothing is published until the supporter approves it. Anonymous support is welcome, and amounts stay private unless separately approved for publication.
+Our sponsorship initiative launched **October 7, 2026**. We’re just getting started: public supporter acknowledgments will begin appearing from **November 1, 2026**, as contributions are confirmed and supporters approve their display details. [Be among our first featured supporters](https://support.cityofhats.com/#support). After successful payment, we will contact supporters privately to arrange optional recognition: a display name or GitHub handle, picture or company logo, and any website link. Nothing is published until the supporter approves it. Anonymous support is welcome, and amounts stay private unless separately approved for publication.
 
 See [supporter acknowledgments](https://support.cityofhats.com/#supporters). Contact [admin@cityofhats.com](mailto:admin@cityofhats.com), [call +1 473 475 9594](tel:+14734759594), or [send an SMS](sms:+14734759594) with any questions. One-time contributors are recognized as supporters; ongoing sponsors will be identified separately.
 
