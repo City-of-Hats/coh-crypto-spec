@@ -13,13 +13,27 @@ We are seeking sponsorship to support open-source maintenance and fund an **inde
 |------|--------|
 | Public cryptographic modules | Published under MIT; April 2026 source snapshot |
 | Documentation | Updated October 7, 2026 with audit preparation and clearer scope |
+| AI-assisted internal review | 9 findings; 2 of 3 High remediations delivered, 1 High in progress; final validation tracked separately |
 | Independent security audit | Not completed; seeking funding |
 | Auditor, agreed scope, budget and schedule | Not announced |
 | Current application/source correspondence | Not verified by this documentation update |
 
 **[Sponsor the open-source work and audit →](https://support.cityofhats.com)**
 
-[Protocol specification](PROTOCOL.md) · [Proposed audit scope](AUDIT.md) · [Report a vulnerability](SECURITY.md) · [Contribute](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
+[Protocol specification](PROTOCOL.md) · [Security progress](SECURITY-PROGRESS.md) · [Proposed audit scope](AUDIT.md) · [Report a vulnerability](SECURITY.md) · [Contribute](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
+
+## Security Review Progress
+
+Our September preliminary AI-assisted internal review recorded **9 findings: 3 High, 4 Medium and 2 Low**. Two High remediations have been delivered; one High remains under active remediation, with technical details withheld.
+
+| Severity | Found | Fixes delivered | Remediation outstanding |
+|----------|------:|----------------:|------------------------:|
+| High | 3 | 2 | 1 |
+| Medium | 4 | 1 | 3 |
+| Low | 2 | 0 | 2 |
+| **Total** | **9** | **3** | **6** |
+
+Delivered fixes and verified closure are tracked separately: **one finding is verified closed; two delivered fixes await final validation**. Those two remain formally open alongside the six outstanding remediations. The [dated progress record](SECURITY-PROGRESS.md) explains the evidence, counting method and limitations. This internal review is separate from the independent audit we are seeking.
 
 ## Why an Independent Audit Matters
 

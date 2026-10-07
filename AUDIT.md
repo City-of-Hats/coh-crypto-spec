@@ -4,6 +4,12 @@ Updated October 7, 2026. **Status: seeking funding; independent audit not comple
 
 This is a proposal for planning and discussion with independent auditors. It is not an agreed engagement, audit report, security certification or promise of a completion date.
 
+## Internal Review Already Underway
+
+The September preliminary AI-assisted internal review recorded nine findings (3 High, 4 Medium, 2 Low). Two High remediations and one Medium remediation have been delivered; one High remains under active remediation. One delivered remediation is verified closed, while two await final closure validation. See [SECURITY-PROGRESS.md](SECURITY-PROGRESS.md) for the dated counts, evidence summary and disclosure boundaries.
+
+The independent engagement should review the remediation and assess the selected current implementation. Internal review and passing tests do not replace that external assessment.
+
 ## Purpose
 
 The review should answer a practical question: **does the implementation keep readable messages and decryption keys restricted to the intended participants, including when something fails or an attacker interferes?**
