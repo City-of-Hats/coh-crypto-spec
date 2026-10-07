@@ -116,6 +116,25 @@ Our sponsorship initiative launched **October 7, 2026**. We’re just getting st
 
 See [supporter acknowledgments](https://support.cityofhats.com/#supporters). Contact [admin@cityofhats.com](mailto:admin@cityofhats.com), [call +1 473 475 9594](tel:+14734759594), or [send an SMS](sms:+14734759594) with any questions. One-time contributors are recognized as supporters; ongoing sponsors will be identified separately.
 
+## Find Us and Read About Us
+
+- [City of Hats on the Apple App Store](https://apps.apple.com/us/app/city-of-hats/id6760218054)
+- [City of Hats on Google Play](https://play.google.com/store/apps/details?id=com.cityofhats.securechannels)
+- [TechBeat Canada founder interview: City of Hats — Redefining messaging with location-controlled encryption](https://techbeat.ca/founders/city-of-hats-redefining-messaging-with-location-controlled-encryption/) — April 29, 2026
+- [City of Hats on LinkedIn](https://www.linkedin.com/company/cityofhats/)
+- [Founder Stéphane Vaillancourt on LinkedIn](https://www.linkedin.com/in/stephane2020/)
+- [City of Hats community on Reddit](https://www.reddit.com/r/CityoHats/)
+- [City of Hats on Facebook](https://www.facebook.com/cityofhats/)
+
+## Company Details
+
+**City Of Hats Inc.**<br>
+2967 Dundas Street W, Unit 1689<br>
+Toronto, ON M6P 1Z2<br>
+Canada
+
+**D-U-N-S Number:** 245274907
+
 ## License
 
 The published files are licensed under the [MIT License](LICENSE). This license applies to this repository, not unpublished platform components.

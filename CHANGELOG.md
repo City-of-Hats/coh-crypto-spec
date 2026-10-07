@@ -4,6 +4,10 @@ This records public repository changes. It is not a changelog for the complete d
 
 ## 2026-10-07 — Audit Preparation and Documentation Update
 
+- Added Apple App Store and Google Play listings, the dated TechBeat Canada founder interview, company/founder LinkedIn links, and Reddit/Facebook pages.
+
+- Added the company business address and D-U-N-S number supplied by the project owner.
+
 - Added the sponsorship launch date (October 7, 2026), the start of approved public supporter acknowledgments (November 1, 2026), and an invitation to be among the first featured supporters.
 
 - Added company sponsorship tiers with no employee seat cap: US$1,000–2,499 includes 12 months of Premium for all employees; US$2,500 or more includes lifetime Premium for all current and future employees. Activation is arranged directly, and lifetime lasts as long as City of Hats offers the Premium service.
