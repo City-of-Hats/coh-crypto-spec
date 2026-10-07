@@ -1,273 +1,90 @@
 # City of Hats – Cryptographic Architecture
 
-> Secure messaging and cyber intelligence platform  
-> Identity-based communication without phone numbers or emails
+> Public cryptographic source and protocol documentation for City of Hats.
+> Independent review is our next priority.
 
----
+City of Hats is a communication platform built around **Hat IDs**: identities for different contexts, without using a phone number or email as the messaging identity. This repository publishes two cryptographic modules and their protocol documentation under the MIT license.
 
-## Overview
+## Current Status · October 2026
 
-City of Hats is a next-generation secure communication platform designed to provide private, identity-based messaging without relying on traditional identifiers such as phone numbers or email addresses.
+We are seeking sponsorship to support open-source maintenance and fund an **independent security audit**. The proposed review scope and preparation checklist are in [AUDIT.md](AUDIT.md).
 
-This repository contains the **cryptographic architecture documentation, formal protocol specification, and production source code** for the encryption layer used to secure messaging, voice, and data exchange within the platform.
+| Item | Status |
+|------|--------|
+| Public cryptographic modules | Published under MIT; April 2026 source snapshot |
+| Documentation | Updated October 7, 2026 with audit preparation and clearer scope |
+| Independent security audit | Not completed; seeking funding |
+| Auditor, agreed scope, budget and schedule | Not announced |
+| Current application/source correspondence | Not verified by this documentation update |
 
-📄 **[Read the full Protocol Specification →](PROTOCOL.md)**
+**[Sponsor the open-source work and audit →](https://support.cityofhats.com)**
 
----
+[Protocol specification](PROTOCOL.md) · [Proposed audit scope](AUDIT.md) · [Report a vulnerability](SECURITY.md) · [Contribute](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
 
-## Source Code
+## Why an Independent Audit Matters
 
-The [`PROTOCOL.md`](PROTOCOL.md) document provides a complete protocol specification covering key exchange flows, Double Ratchet parameters, hybrid post-quantum integration, group sender key distribution, sealed payload format, wire formats, and all cryptographic primitives used.
+“How do I know my messages aren't being copied to the FBI—or anyone else?”
 
-The `src/` directory contains the actual production cryptographic implementation:
+Think of an encrypted message as a locked parcel. A delivery service can carry the parcel without having the key. But that promise depends on the locks working, the keys staying with the right people, and the application not making another readable copy before locking the parcel.
 
-| File | Description |
-|------|-------------|
-| [`src/crypto.ts`](src/crypto.ts) | Core E2E encryption — X25519 + ML-KEM-768 hybrid key exchange, Double Ratchet with header encryption, AES-256-GCM, HKDF key derivation, metadata padding, safety numbers, steganography (LSB), time-locked encryption, PIN-based key wrapping (PBKDF2), tamper-evident audit log chain, and key rotation alerts. |
-| [`src/groupCrypto.ts`](src/groupCrypto.ts) | Group chat Sender Keys protocol — HMAC chain ratchet, AES-256-GCM encryption, ECDSA P-256 sender signature verification. |
+An independent auditor checks the code and how the application uses it: how keys are created and stored, who can decrypt a message, and whether logs, backups or other paths could expose readable content. Publishing code lets people inspect it; a funded audit gives experienced reviewers dedicated time to investigate and report their findings.
 
-These are the same modules running in the production application (API URLs sanitized).
+An audit provides evidence about a **specific version and agreed scope**. It cannot guarantee that a service will always be secure, rule out every possible attack, or protect messages on an already compromised device. We have not completed an independent audit and do not present this repository as proof that the whole service is secure.
 
----
+## What Is Published
 
-## Design Principles
+| File | Contents |
+|------|----------|
+| [src/crypto.ts](src/crypto.ts) | Classical and hybrid key exchange, Double Ratchet with header encryption, AES-GCM helpers, padding, safety numbers, optional PIN storage helpers, encrypted state backup helpers, and additional cryptographic utilities |
+| [src/groupCrypto.ts](src/groupCrypto.ts) | Group Sender Keys: HMAC chain ratchet, AES-GCM message encryption and ECDSA P-256 sender signatures |
+| [PROTOCOL.md](PROTOCOL.md) | Version 1.0 description of the published design, with an October documentation status update |
 
-City of Hats is built around the following core principles:
+The modules were published on April 11, 2026, with API URLs sanitized. Their original publication commit is [`40b03a5`](https://github.com/City-of-Hats/coh-crypto-spec/commit/40b03a5ded6db3571bcc0eb2ddec6682a9bbb891). This update leaves those source files unchanged. It does not establish that they match the current browser, Android or iOS application.
 
-- **End-to-End Encryption by Default**  
-  All messages and calls are encrypted such that only communicating parties can access the content.
+This is a **partial source publication**, not the complete City of Hats application. Backend infrastructure, frontend integration, native clients and call/media integration are not included. The repository also has no standalone package manifest, dependency lockfile or automated test suite. Those are preparation gaps to address before a reproducible audit; see [AUDIT.md](AUDIT.md#preparation-before-the-audit).
 
-- **Identity Abstraction**  
-  Users communicate via "Hat IDs", removing dependency on phone numbers or emails.
+## Cryptographic Design in the Published Snapshot
 
-- **Forward Secrecy**  
-  Compromise of long-term keys does not expose past communications.
+### One-to-One Messaging
 
-- **Post-Quantum Readiness**  
-  Hybrid key exchange mechanisms are used to prepare for future cryptographic threats.
+- **Classical key agreement:** X25519, with a P-256 fallback.
+- **Hybrid key agreement:** ML-KEM-768 shared secret combined with the classical secret through HKDF. Peers without a post-quantum public key use classical-only agreement; hybrid protection is conditional on its use and correct integration.
+- **Message encryption:** AES-256-GCM with a 12-byte random IV.
+- **Session evolution:** Double Ratchet with HKDF-SHA-256 root derivation and HMAC-SHA-256 chain derivation; maximum skipped-message allowance of 200.
+- **Header encryption:** Separate keys encrypt ratchet public keys and message counters. This does not hide all routing metadata.
+- **Padding:** Buckets of 64–4096 bytes, with larger payloads rounded to a multiple of 4096. Padding reduces length precision; it does not eliminate length or traffic analysis.
+- **Key verification:** 30-digit safety numbers and peer key-change detection helpers. Effective verification depends on application behavior and users comparing numbers through a trusted channel.
 
-- **Minimal Data Exposure**  
-  System design minimizes metadata generation and storage wherever possible.
+The design aims to provide forward secrecy and recovery after some key compromises. The guarantees depend on correct session establishment, state persistence, key deletion and integration, which need review alongside the algorithms.
 
----
+### Group Messaging
 
-## What Makes City of Hats Different
+Each sender uses a 32-byte chain key and an ECDSA P-256 signing key pair. Messages use an HMAC-derived AES-GCM key and a sender signature. Sender key distribution is described through existing one-to-one channels. Membership changes, key rotation and application-level authorization need review beyond these two files.
 
-Most secure messengers still require a phone number or email to create an account. That single requirement creates a permanent link between your real identity and every conversation you have.
+### Storage and Additional Utilities
 
-City of Hats replaces this with **Hat IDs** — cryptographic identities that exist independently of any personal identifier. This enables:
+The snapshot includes PIN-derived storage helpers using PBKDF2-SHA-256 (600,000 iterations), encrypted state backup helpers, a local hash-chain log, passphrase-based encryption, time-lock key derivation, LSB steganography and XOR splitting.
 
-- **Anonymous yet persistent identities** — You can maintain a reputation without revealing who you are
-- **Context-specific identities** — Use a different Hat for work, personal, investigative, or temporary conversations. No correlation between them.
-- **No phone number, no email, no identity graph** — There is nothing to subpoena that links a Hat to a person
+**Local storage needs particular review:** optional `secureSet`/`secureGet` helpers coexist with persistence functions that directly write keys and state to `localStorage`. The PIN-derived key is cached in `sessionStorage`. These files alone do not demonstrate that all sensitive data is protected at rest, and a hash-chain log is not an independent security audit.
 
-In addition, City of Hats integrates **sender-enforced security controls** directly into the encryption layer. Message lifecycle policies — expiration, recall, view-once, burn-after-read — are not UI features bolted on top. They are enforced at the protocol level, inside the encrypted payload, before the server ever sees the message.
+## Privacy Goals and Limits
 
-This is not a Signal clone with a different logo. The identity model is fundamentally different.
+Hat IDs allow separate identities for different contexts. They do not guarantee anonymity or prevent correlation through network activity, infrastructure records, device compromise or information a user shares.
 
----
+For an end-to-end encrypted message, the intended design is that the relay carries ciphertext while the endpoints hold the decryption keys. Confirming this across the deployed system requires review of clients, servers, logs, backups and key distribution. The published modules alone cannot establish server logging practices or the security of voice and video calls.
 
-## Cryptographic Stack
+Operational metadata may include Hat codes, pair/group identifiers, timestamps, delivery status and push notification tokens. Encrypted headers and padding do not hide all of it. Infrastructure privacy statements are described separately on the [transparency page](https://cityofhats.com/transparency); they have not been independently validated by this repository update.
 
-### Key Exchange (1:1 Chat)
+Message expiration, recall and view-once controls depend on recipient application behavior. They cannot prevent a recipient from photographing, recording or copying content after decryption.
 
-City of Hats uses a **hybrid key exchange model** combining:
+## Review and Help
 
-- `X25519` (Elliptic Curve Diffie-Hellman) with automatic `P-256` fallback
-- `ML-KEM-768 (Kyber)` (Post-Quantum Key Encapsulation)
+Security researchers can start with the [protocol](PROTOCOL.md) and [audit questions](AUDIT.md). Use [GitHub issues](https://github.com/City-of-Hats/coh-crypto-spec/issues) for public documentation questions. For a suspected vulnerability, follow [SECURITY.md](SECURITY.md) and contact us privately before posting exploit details.
 
-Both shared secrets are concatenated and fed through HKDF to produce a hybrid root key, providing:
-- Strong classical security
-- Resistance against future quantum attacks
-
-### Message Encryption
-
-- **AES-256-GCM** — Authenticated encryption ensuring confidentiality and integrity
-- **12-byte random IV** per message
-- **Metadata padding** — Plaintext is padded to fixed-size buckets (64–4096 bytes) so ciphertext length does not reveal message length
-
-### Session Protocol (1:1 Chat)
-
-City of Hats uses a **Double Ratchet protocol** (Signal specification family), providing:
-
-- Forward secrecy
-- Break-in recovery
-- Per-message key evolution
-- **Encrypted headers** — DH ratchet public keys and message counters are encrypted with a separate header key, preventing metadata leakage
-
-Key derivation functions:
-- **KDF_RK**: HKDF-SHA-256 deriving root key + chain key + header key (96 bytes)
-- **KDF_CK**: HMAC-SHA-256 deriving message key + next chain key
-- **Max skip**: 200 messages (out-of-order tolerance)
-
-### Group Encryption (Sender Keys)
-
-Group chat uses a **Sender Keys protocol**:
-
-- Each member generates a sender key (32-byte chain key + ECDSA P-256 signing key pair)
-- Sender keys are distributed to group members encrypted via existing 1:1 channels
-- Messages are encrypted once with the sender's chain key (HMAC ratchet → AES-256-GCM)
-- Each message is signed with ECDSA P-256 for sender verification
-- Chain ratchets forward after each message for forward secrecy
-
-### Key Verification
-
-- **Safety Numbers** — 30-digit codes (6 groups of 5) derived from double SHA-256 hash of both parties' sorted public keys. Users can compare out-of-band to verify no MITM attack.
-- **Key Change Alerts** — Peer public key changes are detected and flagged to the user.
-
-### Additional Cryptographic Features
-
-- **Sealed Sender** — Sender identity is included inside the encrypted payload, preventing server-side attribution tampering
-- **Steganography** — LSB encoding to embed ciphertext inside PNG images
-- **Time-Locked Encryption** — Decryption key derived from URL key + server-held fragment via HKDF
-- **XOR Secret Splitting** — Split ciphertext into two shares for multi-path delivery
-- **EchoDrop** — Passphrase-derived encryption using PBKDF2 (600,000 iterations)
-
-### Local Key Protection
-
-- **PIN Protection** — PBKDF2 (SHA-256, 600,000 iterations) derives an AES-256-GCM key from a user PIN
-- All sensitive localStorage keys are wrapped with the PIN-derived key
-- Derived key is cached in sessionStorage (one unlock per browser session)
-
-### Audit Trail
-
-- **Tamper-Evident Audit Log** — Local hash chain (SHA-256) recording all cryptographic operations
-- Each entry chains to the previous via its hash, making tampering detectable
-- Users can verify chain integrity at any time
-
----
-
-## Identity Model (Hat System)
-
-Instead of traditional accounts:
-
-- Users create **Hat IDs**
-- Hats can be:
-  - Disposable (temporary)
-  - Persistent (long-term identity)
-  - Context-specific (per conversation or use case)
-
-This reduces:
-- Identity correlation
-- Centralized user tracking
-
----
-
-## Message Security Features
-
-The platform supports advanced sender-controlled protections:
-
-- View-once messages
-- Burn-after-read messages
-- Time-based expiration
-- Message recall
-- Sealed (PIN-protected) files
-
-These features operate on top of the encrypted transport layer.
-
----
-
-## Architecture Notes
-
-- Messages are encrypted **client-side before transmission**
-- Servers act as **relay infrastructure only**
-- No plaintext message content is stored on servers
-- Double Ratchet state is backed up to the server **encrypted with a key derived from the user's private key** — the server stores only opaque ciphertext
-
-For detailed information on what the server can and cannot see, visit our [Transparency Page](https://cityofhats.com/transparency).
-
----
-
-## Metadata Considerations
-
-"We encrypt your messages" is not enough. Metadata — who talks to whom, when, how often, from where — can be as revealing as content. City of Hats is designed to minimize metadata exposure:
-
-- **No phone numbers or emails** — Hat IDs are the only identifier. There is no mapping from Hat to real-world identity on our servers.
-- **No plaintext content stored** — The server relays ciphertext. For E2E channels, we cannot decrypt it even if compelled.
-- **No persistent IP logging in the app** — IP addresses are hashed for rate limiting and discarded. We do not maintain IP-to-Hat association logs.
-- **Encrypted headers** — DH ratchet public keys and message counters are encrypted, not visible to the server in transit.
-- **Metadata padding** — Message lengths are padded to fixed buckets so ciphertext size does not reveal content length.
-
-**What we are honest about:**
-- The server does see Hat codes, pair/group IDs, timestamps, and delivery status — this is required to route messages.
-- Push notification tokens are stored to deliver notifications.
-- We are working toward reducing even these operational metadata points.
-
-Full details: [cityofhats.com/transparency](https://cityofhats.com/transparency)
-
----
-
-## Threat Model
-
-City of Hats is designed to protect against:
-
-- **Passive network surveillance** — All traffic is E2E encrypted. An observer on the network sees only ciphertext with encrypted headers.
-- **Server compromise** — For E2E channels, the server holds no decryption keys. A complete database breach yields only opaque ciphertext, public keys, and routing metadata.
-- **Identity correlation** — No phone number or email is required. Hat IDs are not linked to real-world identity on our infrastructure.
-- **Message content analysis** — Metadata padding prevents length-based analysis. Sealed sender prevents server-side attribution tampering.
-- **Future quantum attacks** — Hybrid X25519 + ML-KEM-768 key exchange provides post-quantum resistance today.
-- **Key compromise (forward secrecy)** — Double Ratchet ensures that compromising current keys does not expose past messages. Each message uses a unique derived key that is discarded after use.
-
-**What we do not yet claim to protect against:**
-
-- **Advanced nation-state endpoint compromise** — If your device is compromised at the OS level, encryption cannot help. This is true of every messaging app.
-- **Traffic analysis at scale** — While we pad message lengths and encrypt headers, sophisticated traffic analysis (timing, frequency, volume patterns) is an open research problem that no messenger has fully solved.
-- **Formal verification** — Our protocol has not yet undergone formal mathematical verification or a completed third-party audit. This is planned.
-
-We believe stating limitations clearly is more credible than claiming invulnerability.
-
----
-
-## Transparency Status
-
-City of Hats is currently:
-
-- ✅ Cryptographic source code published (this repository)
-- ✅ Architecture documentation published (this repository)
-- ✅ Formal protocol specification published ([PROTOCOL.md](PROTOCOL.md))
-- ✅ Privacy & logging transparency page published ([cityofhats.com/transparency](https://cityofhats.com/transparency))
-- ✅ MIT licensed for maximum openness
-- 🔒 Closed-source (core platform, non-crypto components)
-- 🧪 Preparing for independent security review
-
-Planned next steps:
-
-- Conduct third-party security audit
-- Expand open-source scope
-
----
-
-## Scope of This Repository
-
-This repository includes:
-
-- Formal protocol specification ([`PROTOCOL.md`](PROTOCOL.md))
-- Production cryptographic source code ([`src/`](src/))
-- High-level architecture overview (this README)
-
-It does **not** include:
-
-- Backend infrastructure implementation
-- Frontend UI components
-- Proprietary intelligence systems
-
----
+Sponsorship supports the open-source work and planned independent review. No completed audit, booked auditor or security certification is implied by contributing. [Support the work](https://support.cityofhats.com), or contact [admin@cityofhats.com](mailto:admin@cityofhats.com) about audit proposals and sponsorship.
 
 ## License
 
-This repository is licensed under the [MIT License](LICENSE).
+The published files are licensed under the [MIT License](LICENSE). This license applies to this repository, not unpublished platform components.
 
----
-
-## Disclaimer
-
-This document provides an overview of the cryptographic design and includes production source code. Implementation details may evolve as the platform matures and undergoes formal review.
-
----
-
-City of Hats is actively evolving toward greater transparency and external validation. We welcome review, feedback, and discussion from the security community.
-
-📧 admin@cityofhats.com
-
-**City of Hats Inc.** · Toronto, Canada  
-Private communication. In your control.
+**City of Hats Inc.** · Toronto, Canada

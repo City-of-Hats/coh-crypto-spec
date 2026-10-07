@@ -1,11 +1,28 @@
 # City of Hats – Protocol Specification
 
-> Version 1.0 · April 2026  
-> Status: Production implementation — subject to evolution pending formal audit
+> Technical description: Version 1.0 · April 2026
+>
+> Documentation updated: October 7, 2026
+>
+> Status: Published source snapshot; independent audit not completed
 
-This document specifies the cryptographic protocols used in City of Hats. It is intended for security researchers, auditors, and anyone evaluating the platform's encryption design.
+This document describes the cryptographic design published in April 2026. It is intended for security researchers, auditors, and anyone evaluating that design. The October update adds review context; it does not revise the technical algorithms or establish correspondence with the current deployed application.
 
-For the production source code implementing these protocols, see [`src/crypto.ts`](src/crypto.ts) and [`src/groupCrypto.ts`](src/groupCrypto.ts).
+For the published source snapshot, see [`src/crypto.ts`](src/crypto.ts) and [`src/groupCrypto.ts`](src/groupCrypto.ts).
+
+## October 2026 Review Context
+
+We are seeking [sponsorship for open-source maintenance and an independent security audit](https://support.cityofhats.com). See [AUDIT.md](AUDIT.md) for the proposed scope, preparation gaps and intended deliverables. No auditor, agreed scope, budget or schedule has been announced.
+
+Sections 1–20 below remain the version 1.0 technical description. Their security properties are design claims to evaluate against implementation and integration, not findings from an independent audit. Reviewers should account for these boundaries:
+
+- The two published modules do not include application orchestration, server infrastructure, native clients or voice/video encryption integration.
+- Optional PIN storage helpers do not establish protection of every stored secret; the snapshot also includes direct `localStorage` persistence functions and a `sessionStorage` key cache.
+- Hybrid key agreement depends on a peer having a post-quantum public key; classical-only fallback is described in section 3.4. Padding and encrypted headers reduce some exposure but do not eliminate routing metadata or traffic analysis.
+- Hat IDs do not guarantee anonymity or prevent identity correlation. Recipient controls cannot prevent copying content after decryption.
+- The audit must identify exact commits/builds, dependencies, runtime assumptions and integration code before its results can support claims about a deployed version.
+
+Use [SECURITY.md](SECURITY.md) for private vulnerability reports and [CONTRIBUTING.md](CONTRIBUTING.md) for public review contributions.
 
 ---
 
@@ -834,6 +851,7 @@ Each share alone reveals nothing about the original data (information-theoretic 
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | April 2026 | Initial publication |
+| Documentation update (technical version remains 1.0) | October 7, 2026 | Added audit preparation links, source/version boundaries and review limitations; sections 1–20 and cryptographic source unchanged |
 
 ---
 
